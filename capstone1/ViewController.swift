@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate{
     
     
 
@@ -32,23 +32,24 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tableView.dataSource = self
         searchBar.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
         filteredData = data
         
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("1")
+       // print("1")
         return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("2")
+       // print("2")
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as UITableViewCell
-        print("3")
+        //print("3")
         cell.textLabel?.text = filteredData[indexPath.row]
-
+        
         return cell
     }
     
@@ -60,6 +61,27 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     
         tableView.reloadData()
     }
+    
+    ///    Detail view
+    
+    // ...
+    
+    
+    // method to run when table view cell is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         let checklist = filteredData[indexPath.row]
+        // Segue to the second view controller
+        self.performSegue(withIdentifier: "segueToDetailView", sender: checklist)
+    }
+    
+    // This function is called before the segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // get a reference to the second view controller
+        let DetailViewController = segue.destination as! DetailViewController
+        // set a variable in the second view controller with the data to pass
+        DetailViewController.receivedData = sender as! String
+    }
+    
 
 }
 
