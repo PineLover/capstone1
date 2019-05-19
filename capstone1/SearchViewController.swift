@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate{
+class SearchViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate{
     
-    
+    let csvObject = CsvController.init(filename: "/Users/gimdonghwan/Downloads/capstone1/capstone1/allstock_info.csv")
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     let mainChart : UIImage = UIImage(named: "mainchart")!
   
     
-    let data = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
+    var data = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
                 "Philadelphia, PA", "Phoenix, AZ", "San Diego, CA", "San Antonio, TX",
                 "Dallas, TX", "Detroit, MI", "San Jose, CA", "Indianapolis, IN",
                 "Jacksonville, FL", "San Francisco, CA", "Columbus, OH", "Austin, TX",
@@ -35,7 +35,11 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
+        
+        data = csvObject.data
         filteredData = data
+        
+        
         
     }
 
